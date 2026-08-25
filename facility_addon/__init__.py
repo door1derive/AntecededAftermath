@@ -25,9 +25,8 @@ from bpy.types import (
     PropertyGroup,
 )
 
-# NOTE: This add-on expects the 'facility' package to be importable (placed in Blender's PYTHONPATH
-# or installed into Blender's Python). The add-on operators import facility at execution time and
-# report a friendly error if it isn't found.
+from typing import List
+
 
 class FacilitySettings(PropertyGroup):
     tile_shape: EnumProperty(
@@ -83,5 +82,193 @@ class FacilitySettings(PropertyGroup):
     end_r: IntProperty(name="End R", default=-1)
 
 
-# Operators and UI omitted here for brevity in the review stage.
-# When you confirm, I'll write the full add-on operator code (the version we've been iterating on).
+class FACILITY_OT_create_tile_floor(Operator):
+    bl_idname = "facility.create_tile_floor"
+    bl_label = "Create Tile Floor"
+    bl_description = "Create a combined mesh of tiles using the facility package"
+
+    def execute(self, context):
+        settings: FacilitySettings = context.scene.facility_settings
+
+        try:
+            from facility.generator import HexFloorGenerator
+        except Exception as e:
+            self.report({'ERROR'}, f"Failed to import 'facility' package generator: {e}")
+            return {'CANCELLED'}
+
+        try:
+            if settings.tile_shape == 'TRIANGLE':
+                from facility.triangle import TriangleLayout
+                L = TriangleLayout(size=settings.tile_size, spacing=settings.spacing, origin=(0.0, 0.0))
+                tiles = L.rectangular_region(
+                    width=settings.rect_width,
+                    height=settings.rect_height,
+                    origin_col=settings.rect_origin_col,
+                    origin_row=settings.rect_origin_row,
+                )
+            else:
+                from facility.hexgrid import Layout as HexLayout
+                flat_top = (settings.orientation == 'FLAT')
+                L = HexLayout(size=settings.tile_size, spacing=settings.spacing, start_angle_deg=0.0, flat_top=flat_top)
+                if settings.extent_mode == 'RECTANGLE':
+                    tiles = L.rectangular_region(
+                        width=settings.rect_width,
+                        height=settings.rect_height,
+                        origin_col=settings.rect_origin_col,
+                        origin_row=settings.rect_origin_row,
+                        odd=bool(settings.rect_use_odd),
+                    )
+                else:
+                    tiles = L.axial_rectangle(
+                        q_min=settings.q_min,
+                        q_max=settings.q_max,
+                        r_min=settings.r_min,
+                        r_max=settings.r_max,
+                    )
+        except Exception as e:
+            self.report({'ERROR'}, f"Failed to build layout/tiles: {e}")
+            return {'CANCELLED'}
+
+        try:
+            gen = HexFloorGenerator(L)
+            segmented = getattr(settings, "segment_tile", False)
+            inner_ratio = getattr(settings, "inner_ratio", 0.4)
+            obj = gen.create_floor_object(
+                tiles,
+                name=settings.object_name,
+                segmented=segmented,
+                inner_ratio=inner_ratio,
+            )
+        except Exception as e:
+            self.report({'ERROR'}, f"Failed to create tile floor: {e}")
+            return {'CANCELLED'}
+
+        self.report({'INFO'}, f"Created {obj.name} ({len(tiles)} tiles)")
+        return {'FINISHED'}
+
+
+class FACILITY_OT_create_corridor(Operator):
+    bl_idname = "facility.create_corridor"
+    bl_label = "Create Corridor (lined tiles)"
+    bl_description = "Create a floor along a tile line (hex linedraw for hexes)"
+
+    def execute(self, context):
+        settings: FacilitySettings = context.scene.facility_settings
+
+        try:
+            from facility.generator import HexFloorGenerator
+        except Exception as e:
+            self.report({'ERROR'}, f"Failed to import 'facility' package generator: {e}")
+            return {'CANCELLED'}
+
+        if settings.tile_shape != 'HEX':
+            self.report({'ERROR'}, "Corridor linedraw currently supported only for hex tiles.")
+            return {'CANCELLED'}
+
+        try:
+            from facility.hexgrid import Layout as HexLayout, Axial
+            flat_top = (settings.orientation == 'FLAT')
+            L = HexLayout(size=settings.tile_size, spacing=settings.spacing, start_angle_deg=0.0, flat_top=flat_top)
+            a = Axial(settings.start_q, settings.start_r)
+            b = Axial(settings.end_q, settings.end_r)
+            tiles = L.linedraw(a, b)
+        except Exception as e:
+            self.report({'ERROR'}, f"Failed to compute corridor hex line: {e}")
+            return {'CANCELLED'}
+
+        try:
+            gen = HexFloorGenerator(L)
+            segmented = getattr(settings, "segment_tile", False)
+            inner_ratio = getattr(settings, "inner_ratio", 0.4)
+            obj = gen.create_floor_object(
+                tiles,
+                name=settings.object_name,
+                segmented=segmented,
+                inner_ratio=inner_ratio,
+            )
+        except Exception as e:
+            self.report({'ERROR'}, f"Failed to create corridor: {e}")
+            return {'CANCELLED'}
+
+        self.report({'INFO'}, f"Created corridor {obj.name} with {len(tiles)} tiles")
+        return {'FINISHED'}
+
+
+class FACILITY_PT_panel(Panel):
+    bl_label = "Facility (Tile Floor)"
+    bl_idname = "FACILITY_PT_panel"
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = "Facility"
+
+    def draw(self, context):
+        layout = self.layout
+        settings: FacilitySettings = context.scene.facility_settings
+
+        box = layout.box()
+        box.label(text="Tile Type / Layout")
+        row = box.row(align=True)
+        row.prop(settings, "tile_shape", text="")
+        row.prop(settings, "orientation", text="")
+        box.prop(settings, "tile_size")
+        box.prop(settings, "spacing")
+        box.prop(settings, "object_name")
+
+        box.prop(settings, "segment_tile")
+        if settings.segment_tile:
+            box.prop(settings, "inner_ratio")
+
+        if settings.extent_mode == 'RECTANGLE':
+            box = layout.box()
+            box.label(text="Rectangle (grid)")
+            box.prop(settings, "rect_width")
+            box.prop(settings, "rect_height")
+            row = box.row(align=True)
+            row.prop(settings, "rect_origin_col")
+            row.prop(settings, "rect_origin_row")
+            box.prop(settings, "rect_use_odd")
+        else:
+            box = layout.box()
+            box.label(text="Parallelogram Range (axial) - hex only")
+            row = box.row(align=True)
+            row.prop(settings, "q_min")
+            row.prop(settings, "q_max")
+            row = box.row(align=True)
+            row.prop(settings, "r_min")
+            row.prop(settings, "r_max")
+
+        layout.operator("facility.create_tile_floor", icon="MESH_GRID")
+
+        box = layout.box()
+        box.label(text="Create Corridor (hex only)")
+        row = box.row(align=True)
+        row.prop(settings, "start_q")
+        row.prop(settings, "start_r")
+        row = box.row(align=True)
+        row.prop(settings, "end_q")
+        row.prop(settings, "end_r")
+        layout.operator("facility.create_corridor", icon="MESH_GRID")
+
+
+classes = (
+    FacilitySettings,
+    FACILITY_OT_create_tile_floor,
+    FACILITY_OT_create_corridor,
+    FACILITY_PT_panel,
+)
+
+
+def register():
+    for cls in classes:
+        bpy.utils.register_class(cls)
+    bpy.types.Scene.facility_settings = PointerProperty(type=FacilitySettings)
+
+
+def unregister():
+    for cls in reversed(classes):
+        bpy.utils.unregister_class(cls)
+    del bpy.types.Scene.facility_settings
+
+
+if __name__ == "__main__":
+    register()
