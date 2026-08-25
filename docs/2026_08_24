@@ -1,1 +1,17 @@
 
+Created a general layout for the project.
+
+Began working on the floor.py script in Blender/facility_builder/.
+
+floor.py is loaded in the helios_facility.blend file in Blender/scenes/. Running the script generates two objects, path.lobby and path.boiler_room. path.lobby is a beveled triangle, and path.boiler_room is created with six beveled triangles that are joined and bridged.
+
+The function TriaPoinGet_() was written, which returns a set vectors that are pieced together so that rooms can be set according to givens like triangle size and wall width. The offs (offset) variable sets the bevel distance from the corner of the triangles.
+
+The function lobby_path adds a beveled triangle, flips it, and names it.
+
+The next function boiler_center chains together the vectors returned from TriaPoinGet_() to get the rooms center. This starts at the origin and moves to the triangle edge, then across the wall/door gap, then to the center of the bottom triangle. Then the vectors split and each go to either side, then up to the border of the next triangle and halfway across the mid-gap. Their center sets the room center.
+
+One of the triangle centers is also returned so that the next function can get a vector from the center to that point. Then the vector is rotated 60 degrees at a time, dropping a beveled triangle at each point.
+
+The last function bridges the space between each of the six triangles. The 12 inside vertices are fetched by sorting the magnitude of each vertex from the center. The two closest vertices are checked, and whichever doesn't already have a connection is bridged by an edge. Then the 12 middle vertices are joined to the vertex to which its the closest. Then the polygons are formed by tracing the connection between them.
+
