@@ -13,7 +13,7 @@ The next function boiler_center chains together the vectors returned from TriaPo
 
 One of the triangle centers is also returned so that the next function can get a vector from the center to that point. Then the vector is rotated 60 degrees at a time, dropping a beveled triangle at each point.
 
-The last function bridges the space between each of the six triangles. The 12 inside vertices are fetched by sorting the magnitude of each vertex from the center. The two closest vertices are checked, and whichever doesn't already have a connection is bridged by an edge. Then the 12 middle vertices are joined to the vertex to which its the closest. Then the polygons are formed by tracing the connection between them.
+The last function bridges the space between each of the six triangles. The 12 inside vertices are fetched by sorting the magnitude of each vertex from the center. The two closest vertices are checked, and whichever doesn't already have a connection is bridged by an edge. Then the 12 middle vertices are joined to the vertex to which its the closest. Then the polygons are formed by tracing the connection between two inside vertices and two middle vertices.
 
 ##################
 
