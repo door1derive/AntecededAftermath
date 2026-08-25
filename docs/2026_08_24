@@ -31,7 +31,7 @@ OrigCurs, set the origin of an object to the position of the cursor.
 OrigGeom, calls the Blender function that sets the origin of an object to its geometric center.
 Orig, sets the origin an object to a passed location.
 Objects, returns bpy.context.scene.objects.
-Sele, selects an objects in Blender by name.
+Sele, selects an object in Blender by name.
 Dele, deletes an object in Blender.
 Name, names an object in Blender.
 Join, joins a selected and active object in Blender.
@@ -41,12 +41,12 @@ Loca, sets location.
 LocaRead, reads location.
 RotaRead, reads rotation.
 Scal, sets scale.
-RotaSet_, sets object rotation.
+RotaSet_, sets objects absolute rotation.
 ApplScal, resets object scale while maintaining vertex positions.
 
 Blender mesh operations:
 Edit, toggles editmode.
-VertBeve, calls the Blender function.
+VertBeve, calls the Blender vertex bevel function.
 
 Object data:
 VertList, returns a list of vertices that make up the object.
@@ -56,17 +56,17 @@ PolyVert, returns the list of vertex indices that make up a polygon.
 Uplo, adds a new object to Blender based on the given vertex, edge, and polygon lists.
 
 Aritmetic:
-Clos, determines if two values are within a given tolerance.
+Clos, determines if two values are within a tolerance.
 
 Vector Math:
-VectDot_, dots two n-dimensional vectors.
-VectMagn, returns the magnitude of an n-dimensional vector.
+VectDot_, multiplies two n-dimensional vectors.
+VectMagn, returns the length of an n-dimensional vector.
 Vect, returns a vector from one vector to another.
 VectAdd_, adds two vectors.
 VectScal, scales a vector.
 VectNorm, sets the length of a vector to 1.
 VectAngl, returns the unsigned angle between two vectors.
-VectCros3d__, returns the 3d vector that points in the direction of a plane formed by the two given 3d vectors.
+VectCros3d__, returns the 3d vector that points in the direction of the plane formed by the two given 3d vectors.
 
 Matrix functions:
 MatrDeco, matrix decompose. tips and flips a matrix to prepare it for multiplication.
@@ -75,12 +75,11 @@ Matr, multiplies two matrices.
 Rotation functions:
 VectRota2d__, rotates a 2d vector by a 2d euler.
 VectRota3d__, rotates a 3d vector by a 3d euler.
-Quad3d__, rotates a 3d point a given number of degrees around a given 3d access.
+Quad3d__, rotates a 3d point a given number of degrees around a given 3d axis.
 
 Vector arrays:
 VectDegr, converts a vector of radians to a vector of degrees.
 VectAver, returns the average point of a list of vectors.
-VectCent, returns the center point of the extremes of a list of 3d vectors.
+VectCent, returns the center point of the x, y, and z extremes of a list of 3d vectors.
 
 ####################
-
