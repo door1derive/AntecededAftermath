@@ -55,3 +55,32 @@ PolyList, returns a list of polygons.
 PolyVert, returns the list of vertex indices that make up a polygon.
 Uplo, adds a new object to Blender based on the given vertex, edge, and polygon lists.
 
+Aritmetic:
+Clos, determines if two values are within a given tolerance.
+
+Vector Math:
+VectDot_, dots two n-dimensional vectors.
+VectMagn, returns the magnitude of an n-dimensional vector.
+Vect, returns a vector from one vector to another.
+VectAdd_, adds two vectors.
+VectScal, scales a vector.
+VectNorm, sets the length of a vector to 1.
+VectAngl, returns the unsigned angle between two vectors.
+VectCros3d__, returns the 3d vector that points in the direction of a plane formed by the two given 3d vectors.
+
+Matrix functions:
+MatrDeco, matrix decompose. tips and flips a matrix to prepare it for multiplication.
+Matr, multiplies two matrices.
+
+Rotation functions:
+VectRota2d__, rotates a 2d vector by a 2d euler.
+VectRota3d__, rotates a 3d vector by a 3d euler.
+Quad3d__, rotates a 3d point a given number of degrees around a given 3d access.
+
+Vector arrays:
+VectDegr, converts a vector of radians to a vector of degrees.
+VectAver, returns the average point of a list of vectors.
+VectCent, returns the center point of the extremes of a list of 3d vectors.
+
+####################
+
