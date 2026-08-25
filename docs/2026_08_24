@@ -15,3 +15,43 @@ One of the triangle centers is also returned so that the next function can get a
 
 The last function bridges the space between each of the six triangles. The 12 inside vertices are fetched by sorting the magnitude of each vertex from the center. The two closest vertices are checked, and whichever doesn't already have a connection is bridged by an edge. Then the 12 middle vertices are joined to the vertex to which its the closest. Then the polygons are formed by tracing the connection between them.
 
+##################
+
+This scripts needs to be broken up into multiple scripts and libraries.
+
+Many functions were borrowed from the door2u library.
+
+Utilities:
+FileTo__Line, which writes a list of strings to lines of an external file
+StriTo__, which converts a variable to a string.
+
+Object functions:
+Curs, sets the 3d cursor in Blender.
+OrigCurs, set the origin of an object to the position of the cursor.
+OrigGeom, calls the Blender function that sets the origin of an object to its geometric center.
+Orig, sets the origin an object to a passed location.
+Objects, returns bpy.context.scene.objects.
+Sele, selects an objects in Blender by name.
+Dele, deletes an object in Blender.
+Name, names an object in Blender.
+Join, joins a selected and active object in Blender.
+
+Blender transformations:
+Loca, sets location.
+LocaRead, reads location.
+RotaRead, reads rotation.
+Scal, sets scale.
+RotaSet_, sets object rotation.
+ApplScal, resets object scale while maintaining vertex positions.
+
+Blender mesh operations:
+Edit, toggles editmode.
+VertBeve, calls the Blender function.
+
+Object data:
+VertList, returns a list of vertices that make up the object.
+EdgeList, returns a list of edges.
+PolyList, returns a list of polygons.
+PolyVert, returns the list of vertex indices that make up a polygon.
+Uplo, adds a new object to Blender based on the given vertex, edge, and polygon lists.
+
