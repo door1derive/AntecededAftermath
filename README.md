@@ -1,4 +1,4 @@
-# WormholeAftermath - facility utilities (branch: feature/mathlib)
+# AntecededAftermath - facility utilities (branch: feature/mathlib)
 
 This branch adds a small procedural math library (facility/mathlib.py) and the add-on scaffolding
 so we can iterate on Blender integration without losing history.
