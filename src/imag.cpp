@@ -52,13 +52,13 @@ int ImageLoad(std::string fileName, Image *image) {
 	if ((fread(&planes, 2, 1, file)) != 1) return -1;
 	if (planes != 1) return -1;
 	// read the bits per pixel
-	if ((i = fread(&bpp, 2, 1, file)) != 1) return -1;
+	if ((i = (unsigned long)fread(&bpp, 2, 1, file)) != 1) return -1;
 	if (bpp != 24) return -1;
 	// read the data.
 	fseek(file, 54, SEEK_SET);
 	image->data = (char *)malloc(size);
 	if (image->data == NULL) return -1;
-	if ((i = fread(image->data, size, 1, file)) != 1) return -1;
+	if ((i = (unsigned long)fread(image->data, size, 1, file)) != 1) return -1;
 	char temp;
 	for (i = 0; i < size; i += 3) {
 		temp = image->data[i];
@@ -83,7 +83,7 @@ void TextInit(std::vector<unsigned int> objeImagList) {
 	std::string objeDire = "obje/";
 	std::stringstream fileName;
 	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-	glGenTextures(objeImagList.size(), imagList);
+	glGenTextures((GLsizei)objeImagList.size(), imagList);
 	for (unsigned int a = 0; a < objeImagList.size(); a++) {
 		fileName.str("");
 		fileName << objeDire << a << "/text.bmp";

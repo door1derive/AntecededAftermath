@@ -52,12 +52,12 @@ class Came {
 	public:
 		Vec3 loca;
 		Vec3 u, v, w;
-		float rang = 1000.0;
-		float clip = 0.1;
+		float rang = 1000.0f;
+		float clip = 0.1f;
 		Came() {
-			u.x = 1.0;
-			w.y = 1.0;
-			v.z = 1.0;
+			u.x = 1.0f;
+			w.y = 1.0f;
+			v.z = 1.0f;
 		}
 };
 

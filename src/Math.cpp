@@ -22,7 +22,7 @@ float VectMagn(std::vector<float> vect) {
 
 std::vector<float> VectNorm(std::vector<float> vect) {
 	float VectMagn(std::vector<float> vect);
-	float tole = 0.0001;
+	float tole = 0.0001f;
 	float magn = VectMagn(vect);
 	std::vector<float> retu;
 	for (unsigned int a = 0; a < vect.size(); a++) {
@@ -52,7 +52,7 @@ std::vector<float> VectAver(std::vector<std::vector<float>> vectList) {
 		}
 	}
 	if (a != 0) {
-		retu = VectScal(retu, 1.0 / a);
+		retu = VectScal(retu, 1.0f / a);
 	}
 	return retu;
 }
@@ -88,7 +88,7 @@ float VectDot_(std::vector<float> vec1, std::vector<float> vec2) {
 }
 
 float VectAngl(std::vector<float> vec1, std::vector<float> vec2) {
-	float tole = 0.001;
+	float tole = 0.001f;
 	float retu = 0.0;
 	float deno = VectMagn(vec1) * VectMagn(vec2);
 	if (fabs(deno) >= tole) {
@@ -100,7 +100,7 @@ float VectAngl(std::vector<float> vec1, std::vector<float> vec2) {
 			if (argu < -1.0) {
 				argu = -1.0;
 			}
-			retu = acosf(argu) * 180.0 / pi;
+			retu = acosf(argu) * 180.0f / pi;
 		}
 		else {
 			std::cout << "math domain error" << std::endl;
@@ -119,7 +119,7 @@ int DistTo__Inte(std::vector<float> vectOrig, std::vector<float> vectDire, std::
 	float VectDot_(std::vector<float> vec1, std::vector<float> vec2);
 	int retu = -1;
 	*dist = 0.0;
-	float tole = 0.0001;
+	float tole = 0.0001f;
 	// normal is the direction of the plane
 	float deno = VectDot_(vectDire, norm);
 	if (fabs(deno) >= tole) {
@@ -137,7 +137,7 @@ std::vector<std::vector<float>> Matr(std::vector<std::vector<float>> mat1, std::
 	std::vector<std::vector<float>> retu;
 	int leng = -1;
 	if (mat1.size() > 0) {
-		leng = mat1[0].size();
+		leng = (int)mat1[0].size();
 	}
 	// check if the column count of the first matrix matches the row count of the second matrix
 	if ((int)mat2.size() == leng) {
@@ -165,7 +165,7 @@ std::vector<std::vector<float>> MatrDeco(std::vector<std::vector<float>> matr) {
 	std::vector<std::vector<float>> retu;
 	int leng = -1;
 	if (matr.size() > 0) {
-		leng = matr[0].size();
+		leng = (int)matr[0].size();
 	}
 	for (int a = 0; a < leng; a++) {
 		std::vector<float> row_;

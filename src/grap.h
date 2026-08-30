@@ -127,7 +127,7 @@ class Vec3 {
 		float p = this->x;
 		float q = this->y;
 		float r = this->z;
-		float t = angl * pi / 180.0;
+		float t = angl * pi / 180.0f;
 		t /= 2.0;
 		float a = cosf(t);
 		float b = sinf(t);
@@ -250,8 +250,8 @@ class Vert {
 		float p = this->x;
 		float q = this->y;
 		float r = this->z;
-		float t = angl * pi / 180.0;
-		t /= 2.0;
+		float t = angl * pi / 180.0f;
+		t /= 2.0f;
 		float a = cosf(t);
 		float b = sinf(t);
 		float x = axis.x;
