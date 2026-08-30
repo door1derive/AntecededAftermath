@@ -1,4 +1,4 @@
 
 Changing game name to Anteceded Aftermath.
 
-Finished basic version of main.cpp with glfw window and mouse and keyboard input. Rewrote scene loader function, Init function to use glfw, camera move function to use glfw mouse and keyboard inputs, and close function. Rewrote game loop function. Added linker input dependencies to Visual Studio to implement external libraries: $(CoreLibraryDependencies);%(AdditionalDependencies); glfw3.lib; OpenGL32.Lib; glew32.lib; glew32s.lib; freeglut.lib; GlU32.Lib; Some libraries are probably unneeded.
+Finished basic version of main.cpp with glfw window and mouse and keyboard input. Rewrote scene loader function, Init function to use glfw, camera move function to use glfw mouse and keyboard inputs, and close function. Rewrote game loop function. Added linker input dependencies to Visual Studio to implement external libraries: $(CoreLibraryDependencies);%(AdditionalDependencies); glfw3.lib; OpenGL32.Lib; glew32.lib; glew32s.lib; freeglut.lib; GlU32.Lib; Some libraries are probably unneeded. Camera is now able to view and move across facility geometry.
