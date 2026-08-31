@@ -39,8 +39,10 @@ int ImageLoad(std::string fileName, Image *image) {
 	unsigned long i;
 	// make sure the file is there.
 	// TODO: use fstream
-	//if ((fopen_s(&file, fileName.c_str(), "rb")) != 0) return -1;
-	if ((file = fopen(fileName.c_str(), "rb")) == NULL) return -1;
+	// use this for windows
+	if ((fopen_s(&file, fileName.c_str(), "rb")) != 0) return -1;
+	// use this for unix
+	//if ((file = fopen(fileName.c_str(), "rb")) == NULL) return -1;
 	// read width
 	fseek(file, 18, SEEK_SET); fread(&image->sizeX, 2, 1, file);
 	// read height

@@ -6,11 +6,13 @@
 //#include <GL/glew.h>
 //#include <GL/gl.h>
 //#include <GL/glu.h>
+// ! needed for unix
 #include </GL/GLEWbin/glew.h>
 //#include </GL/GLEWbin/wglew.h>
 //#include <gl/gl.h>
 //#include </GL/wglext.h>
 //#include <gl/glu.h>
+// ! needed for unix
 // TODO: maybe move this up
 #include </GL/GLFW/include/GLFW/glfw3.h>
 

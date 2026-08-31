@@ -421,6 +421,13 @@ def main():
 
 	# write main data file
 
+	# TODO: does this work? make a real fix
+	if totaVert == 0: totaVert = 1
+	if totaNorm == 0: totaNorm = 1
+	if totaColo == 0: totaColo = 1
+	if totaUv__ == 0: totaUv__ = 1
+	if imagCoun == 0: imagCoun = 1
+
 	mainFileList = [""]
 	mainFileList.append("#pragma once")
 	mainFileList.append("")
@@ -445,16 +452,17 @@ def main():
 		#for b in range(inteList[a]): mainFileList.append("#include \"" + str(a) + os.sep + "data_" + str(b) + ".cpp\"")
 		for b in range(inteList[a]): mainFileList.append("#include \"" + str(a) + "/" + "data_" + str(b) + ".cpp\"")
 	mainFileList.append("")
-	mainFileList.append("void Load(std::vector<ObjeInit> &objeInitList, std::vector<ObjeDyna> &objeDynaList, std::vector<ObjeStat> &objeStatList, unsigned int *widt, unsigned int *heig, float *cameSpee, Came *came, float *skyr, float *skyg, float *skyb, float *skya, bool *sky_, bool *fullScre, bool *warpPoin, bool *hideCurs, bool *prin, int *timeFram, std::vector<unsigned int> &objeImagList) {")
+	#mainFileList.append("void Load(std::vector<ObjeInit> &objeInitList, std::vector<ObjeDyna> &objeDynaList, std::vector<ObjeStat> &objeStatList, unsigned int *widt, unsigned int *heig, float *cameSpee, Came *came, float *skyr, float *skyg, float *skyb, float *skya, bool *sky_, bool *fullScre, bool *warpPoin, bool *hideCurs, bool *prin, int *timeFram, std::vector<unsigned int> &objeImagList) {")
+	mainFileList.append("void Load(std::vector<ObjeInit> &objeInitList, std::vector<ObjeDyna> &objeDynaList, std::vector<ObjeStat> &objeStatList, int *widt, int *heig, float *cameSpee, Came *came, float *skyr, float *skyg, float *skyb, float *skya, bool *sky_, bool *fullScre, bool *warpPoin, bool *hideCurs, bool *prin, int *timeFram, std::vector<unsigned int> &objeImagList) {")
 	mainFileList.append("")
 	mainFileList.append("\t*widt = " + str(widt) + ";")
 	mainFileList.append("\t*heig = " + str(heig) + ";")
-	mainFileList.append("\t*cameSpee = " + str(cameSpee) + ";")
+	mainFileList.append("\t*cameSpee = " + str(cameSpee) + "f;")
 	mainFileList.append("\tcame->loca = {" + str(cameLoca[0]) + ", " + str(cameLoca[1]) + ", " + str(cameLoca[2]) + "};")
-	mainFileList.append("\t*skyr = " + str(skyr) + ";")
-	mainFileList.append("\t*skyg = " + str(skyg) + ";")
-	mainFileList.append("\t*skyb = " + str(skyb) + ";")
-	mainFileList.append("\t*skya = " + str(skya) + ";")
+	mainFileList.append("\t*skyr = " + str(skyr) + "f;")
+	mainFileList.append("\t*skyg = " + str(skyg) + "f;")
+	mainFileList.append("\t*skyb = " + str(skyb) + "f;")
+	mainFileList.append("\t*skya = " + str(skya) + "f;")
 	if sky_: mainFileList.append("\t*sky_ = true;")
 	else: mainFileList.append("\t*sky_ = false;")
 	if fullScre: mainFileList.append("\t*fullScre = true;")

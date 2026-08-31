@@ -8,7 +8,7 @@ GLfloat vertList[48699];
 GLfloat normList[16233];
 GLfloat coloList[48699];
 GLfloat uv__List[32466];
-GLuint imagList[0];
+GLuint imagList[1];
 GLuint sky_Imag[6];
 
 #include "0/data_0.cpp"
@@ -269,16 +269,16 @@ GLuint sky_Imag[6];
 #include "47/data_3.cpp"
 #include "47/data_4.cpp"
 
-void Load(std::vector<ObjeInit> &objeInitList, std::vector<ObjeDyna> &objeDynaList, std::vector<ObjeStat> &objeStatList, unsigned int *widt, unsigned int *heig, float *cameSpee, Came *came, float *skyr, float *skyg, float *skyb, float *skya, bool *sky_, bool *fullScre, bool *warpPoin, bool *hideCurs, bool *prin, int *timeFram, std::vector<unsigned int> &objeImagList) {
+void Load(std::vector<ObjeInit> &objeInitList, std::vector<ObjeDyna> &objeDynaList, std::vector<ObjeStat> &objeStatList, int *widt, int *heig, float *cameSpee, Came *came, float *skyr, float *skyg, float *skyb, float *skya, bool *sky_, bool *fullScre, bool *warpPoin, bool *hideCurs, bool *prin, int *timeFram, std::vector<unsigned int> &objeImagList) {
 
 	*widt = 640;
 	*heig = 640;
-	*cameSpee = 0.2;
+	*cameSpee = 0.2f;
 	came->loca = {0.0, -5.0, 0.0};
-	*skyr = 0.6;
-	*skyg = 0.8;
-	*skyb = 1.0;
-	*skya = 1.0;
+	*skyr = 0.6f;
+	*skyg = 0.8f;
+	*skyb = 1.0f;
+	*skya = 1.0f;
 	*sky_ = false;
 	*fullScre = false;
 	*warpPoin = true;
