@@ -430,7 +430,8 @@ def main():
 		stri += ".." + os.sep
 	# TODO: all paths need to be defined above
 	#stri += "code" + os.sep + "obje.h\""
-	stri += "src" + os.sep + "obje.h\""
+	#stri += "src" + os.sep + "obje.h\""
+	stri += "src" + "/" + "obje.h\""
 	mainFileList.append(stri)
 	mainFileList.append("")
 	mainFileList.append("GLfloat vertList[" + str(totaVert + 0) + "];")
@@ -441,7 +442,8 @@ def main():
 	mainFileList.append("GLuint sky_Imag[6];")
 	mainFileList.append("")
 	for a in range(leng):
-		for b in range(inteList[a]): mainFileList.append("#include \"" + str(a) + os.sep + "data_" + str(b) + ".cpp\"")
+		#for b in range(inteList[a]): mainFileList.append("#include \"" + str(a) + os.sep + "data_" + str(b) + ".cpp\"")
+		for b in range(inteList[a]): mainFileList.append("#include \"" + str(a) + "/" + "data_" + str(b) + ".cpp\"")
 	mainFileList.append("")
 	mainFileList.append("void Load(std::vector<ObjeInit> &objeInitList, std::vector<ObjeDyna> &objeDynaList, std::vector<ObjeStat> &objeStatList, unsigned int *widt, unsigned int *heig, float *cameSpee, Came *came, float *skyr, float *skyg, float *skyb, float *skya, bool *sky_, bool *fullScre, bool *warpPoin, bool *hideCurs, bool *prin, int *timeFram, std::vector<unsigned int> &objeImagList) {")
 	mainFileList.append("")

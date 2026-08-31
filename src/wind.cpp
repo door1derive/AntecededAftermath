@@ -1,15 +1,20 @@
 #include <iostream>
+//#include <cstdio>
+//#include <windows.h>
+//#include <windef.h>
+//#include <fstream>
 //#include <GL/glew.h>
 //#include <GL/gl.h>
 //#include <GL/glu.h>
 #include </GL/GLEWbin/glew.h>
-#include </GL/GLEWbin/wglew.h>
-#include <gl/gl.h>
-#include </GL/wglext.h>
-#include <gl/glu.h>
+//#include </GL/GLEWbin/wglew.h>
+//#include <gl/gl.h>
+//#include </GL/wglext.h>
+//#include <gl/glu.h>
 // TODO: maybe move this up
 #include </GL/GLFW/include/GLFW/glfw3.h>
 
+//errno_t fopen_s( FILE* restrict* restrict streamptr, const char* restrict filename, const char* restrict mode );
 
 GLFWwindow* window;
 void Init(int* widt, int* heig, float skyr, float skyg, float skyb, float skya, bool fullScre, bool hideCurs) {
